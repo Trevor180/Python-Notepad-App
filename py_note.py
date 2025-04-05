@@ -1,7 +1,6 @@
 import tkinter as tk
-import os
 from tkinter import filedialog #for saving
-
+from tkinter import colorchooser #changing background
 def open_window():
     
     #Creating window
@@ -25,8 +24,7 @@ def open_window():
     text_box = text_area(window)
     
     #Showing toolbar
-    toolbar_buttons(toolbar_frame, text_box)
-    
+    toolbar_buttons(window, toolbar_frame, text_box)
     
     
     
@@ -39,9 +37,6 @@ def open_window():
     
     #Window color
     window.configure(background="orange")
-
-    
-    
     
 
     #Running application
@@ -70,12 +65,12 @@ def text_area(window):
     
     
     
-def toolbar_buttons(toolbar_frame, text_box):
+def toolbar_buttons(window, toolbar_frame, text_box):
     
     #Buttons and adding the methods
     save_button = tk.Button(toolbar_frame, text="Save", bg="white", command=lambda: save_file(text_box))
     open_button = tk.Button(toolbar_frame, text="Open", bg="white", command=lambda: open_file(text_box))
-    style_button = tk.Button(toolbar_frame, text="Style", bg="white")
+    style_button = tk.Button(toolbar_frame, text="Style", bg="white", command=lambda: change_bg(window))
     
     #Positioning
     save_button.pack(side="left", padx= 10)
@@ -109,19 +104,14 @@ def open_file(text_box):
             text_box.insert("1.0", content)
     
 
-def style_button():
-    
-    #Asking user what file to open
-    file_path = filedialog.askopenfilename(defaultextension= ".txt", filetypes=[("*.txt", "*.txt")])
+#Change background
+def change_bg(window):
 
-    #When chosen path
-    if file_path:
-        with open(file_path, "r", encoding="utf-8") as file:
-            #Reading file
-            content = file.read() 
-            text_box.delete("1.0", "end")
-            text_box.insert("1.0", content)
-    
+    new_color = colorchooser.askcolor(title = "Select a color")
+
+    if new_color:
+        hex_color = new_color[1]
+        window.configure(bg= hex_color)
 
     
     
