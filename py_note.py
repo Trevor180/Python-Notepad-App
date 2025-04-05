@@ -75,16 +75,18 @@ def toolbar_buttons(toolbar_frame, text_box):
     #Buttons and adding the methods
     save_button = tk.Button(toolbar_frame, text="Save", bg="white", command=lambda: save_file(text_box))
     open_button = tk.Button(toolbar_frame, text="Open", bg="white", command=lambda: open_file(text_box))
+    style_button = tk.Button(toolbar_frame, text="Style", bg="white")
     
     #Positioning
     save_button.pack(side="left", padx= 10)
-    open_button.pack(side="left", padx= 4)
+    open_button.pack(side="left", padx= 10)
+    style_button.pack(side="left", padx= 10)
     
     
 def save_file(text_box):
     
     #Askinf user where to put file
-    file_path = filedialog.asksaveasfilename( defaultextension= ".txt", filetypes=[("*.txt", "*.txt")])
+    file_path = filedialog.asksaveasfilename( defaultextension= ".txt", filetypes=[("*.txt", "*.txt")], initialfile="Name your document here!")
 
     #When chosen path
     if file_path:
@@ -106,6 +108,19 @@ def open_file(text_box):
             text_box.delete("1.0", "end")
             text_box.insert("1.0", content)
     
+
+def style_button():
+    
+    #Asking user what file to open
+    file_path = filedialog.askopenfilename(defaultextension= ".txt", filetypes=[("*.txt", "*.txt")])
+
+    #When chosen path
+    if file_path:
+        with open(file_path, "r", encoding="utf-8") as file:
+            #Reading file
+            content = file.read() 
+            text_box.delete("1.0", "end")
+            text_box.insert("1.0", content)
     
 
     
