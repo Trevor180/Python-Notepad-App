@@ -20,7 +20,7 @@ def open_window():
     # Centering title label
     title_label.pack(expand= True)
 
-    #Making text area
+    #Making text area variable
     text_box = text_area(window)
     
     #Showing toolbar
