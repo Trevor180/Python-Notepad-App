@@ -6,32 +6,30 @@ def open_window():
     
     #Creating window
     window = tk.Tk()
+
+
+    #title
+    window.title("Harvest Note By Trevor Wooten")
     
     #making toolbar frame
     toolbar_frame = tk.Frame(window, height= 25, bg="black")
     toolbar_frame.pack(side="top", fill="x")
-    
-    #Showing toolbar
-    toolbar_buttons(window, toolbar_frame)
-    
-    
-    #label
+
+    # title label
     title_label = tk.Label(window, text="Harvest Note", font=("Arial", 20))
     
     # Centering title label
     title_label.pack(expand= True)
-    
-    
-    #Calling other function parts
-    text_area(window)
-    
-    
-    
-    
-    
-    #title
-    window.title("Harvest Note By Trevor Wooten")
 
+    #Making text area
+    text_box = text_area(window)
+    
+    #Showing toolbar
+    toolbar_buttons(toolbar_frame, text_box)
+    
+    
+    
+    
     #Size of window width x height
     window.geometry("700x650")
     
@@ -72,14 +70,11 @@ def text_area(window):
     
     
     
-def toolbar_buttons(window, toolbar_area):
+def toolbar_buttons(toolbar_frame, text_box):
     
-    screen_width = window.winfo_screenwidth()
-
-
-    #Buttons
-    save_button = tk.Button(toolbar_area, text="Save", bg="white")
-    open_button = tk.Button(toolbar_area, text="Open", bg="white")
+    #Buttons and adding the methods
+    save_button = tk.Button(toolbar_frame, text="Save", bg="white", command=lambda: save_file(text_box))
+    open_button = tk.Button(toolbar_frame, text="Open", bg="white", command=lambda: open_file(text_box))
     
     #Positioning
     save_button.pack(side="left", padx= 10)
@@ -89,8 +84,27 @@ def toolbar_buttons(window, toolbar_area):
 def save_file(text_box):
     
     #Askinf user where to put file
-    file_path = filedialog.askopenfilename( defaultextension= ".txt", filetypes=[("Text Files", "*.txt")])
+    file_path = filedialog.asksaveasfilename( defaultextension= ".txt", filetypes=[("*.txt", "*.txt")])
+
+    #When chosen path
+    if file_path:
+        with open(file_path, "w", encoding="utf-8") as file:
+            content = text_box.get("1.0", "end-1c")
+            file.write(content)
     
+
+def open_file(text_box):
+    
+    #Asking user what file to open
+    file_path = filedialog.askopenfilename(defaultextension= ".txt", filetypes=[("*.txt", "*.txt")])
+
+    #When chosen path
+    if file_path:
+        with open(file_path, "r", encoding="utf-8") as file:
+            #Reading file
+            content = file.read() 
+            text_box.delete("1.0", "end")
+            text_box.insert("1.0", content)
     
     
 
