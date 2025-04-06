@@ -19,7 +19,7 @@ def open_window():
     title_label = tk.Label(window, text="Harvest Note", font=("Arial", 20))
     
     # Centering title label
-    title_label.pack(expand= True)
+    title_label.pack(expand= True, pady=10)
 
     #Making text area variable
     text_box = text_area(window)
@@ -35,9 +35,16 @@ def open_window():
     #Size limits
     window.minsize(200, 200)
     window.maxsize(1200, 650)
+
+
+
+    #Word counter
+    word_counter(window)
     
     #Window color
     window.configure(background="orange")
+
+  
     
 
     #Running application
@@ -51,7 +58,7 @@ def text_area(window):
     text_frame = tk.Frame(window, width=1250, height=450)
     
     #Fitting frame the length of screen
-    text_frame.pack(expand= True, fill= "x", padx= 5, pady=(0, 30))
+    text_frame.pack(expand= True, fill= "x", padx= 5, pady=(0, 20))
     
     
     #making text box
@@ -113,6 +120,23 @@ def change_bg(window):
     if new_color:
         hex_color = new_color[1]
         window.configure(bg= hex_color)
+
+
+
+def word_counter(window):
+
+    # counter_frame = tk.Frame(window, height=60 ,bg="black")
+    # counter_frame.pack(side="bottom", fill="x")
+
+    # # Prevent the frame from resizing to fit contents
+    # counter_frame.pack_propagate(False)
+
+    word_label = tk.Label(window, text="Words: 0", fg="white", bg="black", font=("Arial", 12))
+    word_label.pack()
+
+    return word_label
+
+
 
     
     
