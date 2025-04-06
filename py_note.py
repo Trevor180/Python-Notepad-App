@@ -39,7 +39,7 @@ def open_window():
 
 
     #Word counter
-    word_counter(window)
+    word_counter(window, text_box)
     
     #Window color
     window.configure(background="orange")
@@ -123,7 +123,7 @@ def change_bg(window):
 
 
 
-def word_counter(window):
+def word_counter(window, text_box):
 
     # counter_frame = tk.Frame(window, height=60 ,bg="black")
     # counter_frame.pack(side="bottom", fill="x")
@@ -133,6 +133,23 @@ def word_counter(window):
 
     word_label = tk.Label(window, text="Words: 0", fg="white", bg="black", font=("Arial", 12))
     word_label.pack()
+
+    def update_counter(event=None):
+
+        text = text_box.get("1.0", "end-1c")
+
+        #getting words
+        words = len(text.split())
+
+        #getting characters
+        characters = len(text)
+
+        #Binding it to the word label
+        word_label.config(text=f"Words: {words}")
+
+    #Binding to key release 
+    text_box.bind("<KeyRelease>", update_counter)
+
 
     return word_label
 
