@@ -33,7 +33,7 @@ def open_window():
     window.geometry("700x650")
     
     #Size limits
-    window.minsize(200, 200)
+    window.minsize(200, 650)
     window.maxsize(1200, 650)
 
 
@@ -79,11 +79,16 @@ def toolbar_buttons(window, toolbar_frame, text_box):
     save_button = tk.Button(toolbar_frame, text="Save", bg="white", command=lambda: save_file(text_box))
     open_button = tk.Button(toolbar_frame, text="Open", bg="white", command=lambda: open_file(text_box))
     style_button = tk.Button(toolbar_frame, text="Style", bg="white", command=lambda: change_bg(window))
+
+    #Switch button
+    change_count_button = tk.Button(toolbar_frame, text="Word/Character Count", bg="white")
+  
     
     #Positioning
     save_button.pack(side="left", padx= 10)
     open_button.pack(side="left", padx= 10)
     style_button.pack(side="left", padx= 10)
+    change_count_button.pack(side="right", padx= 10)
     
     
 def save_file(text_box):
@@ -125,14 +130,9 @@ def change_bg(window):
 
 def word_counter(window, text_box):
 
-    # counter_frame = tk.Frame(window, height=60 ,bg="black")
-    # counter_frame.pack(side="bottom", fill="x")
-
-    # # Prevent the frame from resizing to fit contents
-    # counter_frame.pack_propagate(False)
-
     word_label = tk.Label(window, text="Words: 0", fg="white", bg="black", font=("Arial", 12))
-    word_label.pack()
+    word_label.pack(side="bottom", anchor="center", padx= 10)
+
 
     def update_counter(event=None):
 
@@ -146,6 +146,8 @@ def word_counter(window, text_box):
 
         #Binding it to the word label
         word_label.config(text=f"Words: {words}")
+
+    
 
     #Binding to key release 
     text_box.bind("<KeyRelease>", update_counter)
