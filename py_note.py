@@ -7,6 +7,10 @@ def open_window():
     #Creating window
     window = tk.Tk()
 
+    global toggle_switch
+    # Toggle variable to track whether we're showing words or characters
+    toggle_switch = tk.StringVar(value="words")
+
 
     #title
     window.title("Harvest Note By Trevor Wooten")
@@ -26,8 +30,11 @@ def open_window():
     
     #Showing toolbar
     toolbar_buttons(window, toolbar_frame, text_box)
-    
-    
+
+    #Word counter
+    word_counter(window, text_box)
+
+
     
     #Size of window width x height
     window.geometry("700x650")
@@ -35,11 +42,6 @@ def open_window():
     #Size limits
     window.minsize(200, 650)
     window.maxsize(1200, 650)
-
-
-
-    #Word counter
-    word_counter(window, text_box)
     
     #Window color
     window.configure(background="orange")
@@ -69,7 +71,6 @@ def text_area(window):
     
     #returning this for the buttons
     return text_area
-    
     
     
     
@@ -133,7 +134,6 @@ def word_counter(window, text_box):
     word_label = tk.Label(window, text="Words: 0", fg="white", bg="black", font=("Arial", 12))
     word_label.pack(side="bottom", anchor="center", padx= 10)
 
-
     def update_counter(event=None):
 
         text = text_box.get("1.0", "end-1c")
@@ -147,13 +147,25 @@ def word_counter(window, text_box):
         #Binding it to the word label
         word_label.config(text=f"Words: {words}")
 
-    
-
     #Binding to key release 
     text_box.bind("<KeyRelease>", update_counter)
 
-
     return word_label
+
+
+
+
+
+
+
+# def switch_count_display(text_box, word_label):
+#     if toggle_switch.get() == "words":
+#         toggle_switch.set("characters")
+#     else:
+#         toggle_switch.set("words")
+#         #Updating label
+#         update_counter(text_box, word_label)
+
 
 
 
