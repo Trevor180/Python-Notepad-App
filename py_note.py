@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog #for saving
 from tkinter import colorchooser #changing background
+
 def open_window():
     
     #Creating window
@@ -33,7 +34,7 @@ def open_window():
     
     #Size limits
     window.minsize(200, 200)
-    window.maxsize(1200, 700)
+    window.maxsize(1200, 650)
     
     #Window color
     window.configure(background="orange")
@@ -50,14 +51,14 @@ def text_area(window):
     text_frame = tk.Frame(window, width=1250, height=450)
     
     #Fitting frame the length of screen
-    text_frame.pack(expand= True, fill= "x", padx= 5, ipady= 50)
+    text_frame.pack(expand= True, fill= "x", padx= 5, pady=(0, 30))
     
     
     #making text box
     text_area = tk.Text(text_frame, font=("Arial", 12), wrap="word")
     text_area.pack(expand= True, fill="both")
-    # text_area.place(x=350, y=300, anchor="center")
-    # text_area.config(height=30, width=100)
+
+    text_area.config(height=29)
     
     #returning this for the buttons
     return text_area
