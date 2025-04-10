@@ -157,7 +157,7 @@ def update_counter(event=None):
     words = len(text.split())
 
     #getting characters
-    characters = len(text)
+    characters = len(text.replace(" ", ""))
 
     if isWord.get():
         #Binding it to the word label
