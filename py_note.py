@@ -2,10 +2,17 @@ import tkinter as tk
 from tkinter import filedialog #for saving
 from tkinter import colorchooser #changing background
 
+
+
 def open_window():
+
 
     #Creating window
     window = tk.Tk()
+    
+    #Word counter boolean
+    global isWord 
+    isWord= tk.BooleanVar(value=True)
 
     global toggle_switch
     # Toggle variable to track whether we're showing words or characters
@@ -26,15 +33,14 @@ def open_window():
     title_label.pack(expand= True, pady=10)
 
     #Making text area variable
+    global text_box
     text_box = text_area(window)
 
     #Showing toolbar
-    toolbar_buttons(window, toolbar_frame, text_box)
+    toolbar_buttons(window, toolbar_frame, text_box, isWord)
 
     #Word counter
     word_counter(window, text_box)
-
-
 
     #Size of window width x height
     window.geometry("700x650")
@@ -74,7 +80,7 @@ def text_area(window):
 
 
 
-def toolbar_buttons(window, toolbar_frame, text_box):
+def toolbar_buttons(window, toolbar_frame, text_box, isWord):
 
     #Buttons and adding the methods
     save_button = tk.Button(toolbar_frame, text="Save", bg="white", command=lambda: save_file(text_box))
@@ -82,7 +88,7 @@ def toolbar_buttons(window, toolbar_frame, text_box):
     style_button = tk.Button(toolbar_frame, text="Style", bg="white", command=lambda: change_bg(window))
 
     #Switch button
-    change_count_button = tk.Button(toolbar_frame, text="Word/Character Count", bg="white")
+    change_count_button = tk.Button(toolbar_frame, text="Word/Character Count", bg="white", command=lambda: switch_count_display(isWord))
 
 
     #Positioning
@@ -130,47 +136,40 @@ def change_bg(window):
 
 
 def word_counter(window, text_box):
+    #Making it available to update counter
+    global word_label 
 
     #Showing words
     word_label = tk.Label(window, text="Words: 0", fg="white", bg="black", font=("Arial", 12), padx= 1)
     word_label.pack(side="bottom", anchor="w", ipadx= 10)
 
-    #showing characters
-    # character_label = tk.Label(window, text="Characters: 0", fg="white", bg="black", font=("Arial", 12))
-    # character_label.pack(anchor="center")
-
-    def update_counter(event=None):
-
-        text = text_box.get("1.0", "end-1c")
-
-        #getting words
-        words = len(text.split())
-
-        #getting characters
-        characters = len(text)
-
-        #Binding it to the word label
-        word_label.config(text=f"Words: {words}")
-
-        # character_label.config(text=f"Characters: {characters}")
-
-
     #Binding to key release
     text_box.bind("<KeyRelease>", update_counter)
 
-    return word_label
 
+    
 
+def update_counter(event=None):
 
-def switch_count_display(window, text_box):
-    if toggle_switch.get() == "words":
-        toggle_switch.set("characters")
+    text = text_box.get("1.0", "end-1c")
+
+    #getting words
+    words = len(text.split())
+
+    #getting characters
+    characters = len(text)
+
+    if isWord.get():
+        #Binding it to the word label
+        word_label.config(text=f"Words: {words}")
     else:
-        toggle_switch.set("words")
-
-    word_counter(window, text_box)
+        word_label.config(text=f"Characters: {characters}")
 
 
+
+def switch_count_display(isWord):
+    isWord.set(not isWord.get())
+    update_counter()
 
 
 
